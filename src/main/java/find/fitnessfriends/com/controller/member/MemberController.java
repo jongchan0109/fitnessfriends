@@ -1,6 +1,7 @@
 package find.fitnessfriends.com.controller.member;
 
 import find.fitnessfriends.com.dto.member.JoinDto;
+import find.fitnessfriends.com.dto.member.LoginDto;
 import find.fitnessfriends.com.entity.member.Member;
 import find.fitnessfriends.com.service.member.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
@@ -44,6 +45,26 @@ public class MemberController {
     @GetMapping("/loginForm")
     public String loginForm() {
         return "member/loginForm";
+    }
+
+    @PostMapping("/login")
+    public String login(@Validated @ModelAttribute LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return "login/loginForm";
+        }
+
+        Member loginMember = memberService.loginProcess(loginDto.getLoginId(), loginDto.getPassword());
+
+        if (loginMember == null) {
+            bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");
+            return "login/loginForm";
+        }
+
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", loginMember);
+
+        return "redirect:/";
     }
 
 }
