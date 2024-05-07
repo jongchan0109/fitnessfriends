@@ -1,5 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page import="find.fitnessfriends.com.entity.member.Member" %>
+<%
+    // 세션에서 로그인 정보 가져오기
+    Member loginMember = (Member) session.getAttribute("loginMember");
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,15 +27,29 @@
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
         <ul class="navbar-nav">
-
-            <!-- 로그인 및 회원가입 메뉴 -->
+            <%-- 세션이 없거나 로그인 정보가 없는 경우 --%>
+            <% if (loginMember == null) { %>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/member/loginForm">로그인</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="${pageContext.request.contextPath}/member/joinForm">회원가입</a>
             </li>
-
+            <% } else { %>
+            <%-- 세션이 있고 로그인 정보가 있는 경우 --%>
+            <li class="nav-item">
+                <a class="nav-link" href="#">게시판</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">매칭하기</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">채팅방</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">로그아웃</a>
+            </li>
+            <% } %>
         </ul>
     </div>
 </nav>
