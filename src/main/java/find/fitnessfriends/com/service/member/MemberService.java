@@ -19,4 +19,20 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    public Member loginProcess(String loginId, String password) {
+
+        Member loginMember = memberRepository.findByLoginId(loginId);
+
+        if (loginMember == null) {
+            return null;
+        }
+        if (!loginMember.getPassword().equals(password)) {
+            return null;
+        }
+
+        return loginMember;
+
+
+    }
+
 }
