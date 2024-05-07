@@ -1,11 +1,15 @@
 package find.fitnessfriends.com.entity.member;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 
+@Getter
 @Entity
+@NoArgsConstructor
 public class Member {
 
     @Id
