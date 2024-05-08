@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -48,22 +49,34 @@ public class MemberController {
     }
 
     @PostMapping("/login")
-    public String login(@Validated @ModelAttribute LoginDto loginDto, BindingResult bindingResult, HttpServletRequest request) {
+    public String login(@Validated @ModelAttribute LoginDto loginDto, BindingResult bindingResult,
+                        HttpServletRequest request, Model model) {
 
         if (bindingResult.hasErrors()) {
-            return "login/loginForm";
+            model.addAttribute("errors", bindingResult.getAllErrors());
+            return "member/loginForm";
         }
 
         Member loginMember = memberService.loginProcess(loginDto.getLoginId(), loginDto.getPassword());
 
         if (loginMember == null) {
             bindingResult.reject("loginFail", "아이디 또는 비밀번호가 맞지 않습니다");
-            return "login/loginForm";
+            return "member/loginForm";
         }
 
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 
+        return "redirect:/";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request) {
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
         return "redirect:/";
     }
 
