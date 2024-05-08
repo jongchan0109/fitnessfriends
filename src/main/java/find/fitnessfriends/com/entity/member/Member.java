@@ -38,4 +38,10 @@ public class Member {
         this.nickname = nickname;
         this.role = Role.MEMBER;
     }
+
+    public void edit(String loginId, String password, String nickname) {
+        this.loginId = loginId;
+        this.password = password;
+        this.nickname = nickname;
+    }
 }
