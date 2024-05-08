@@ -1,6 +1,7 @@
 package find.fitnessfriends.com.service.board;
 
 import find.fitnessfriends.com.entity.board.Board;
+import find.fitnessfriends.com.entity.member.Member;
 import find.fitnessfriends.com.repository.BoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -18,5 +19,10 @@ public class BoardService {
     @Transactional(readOnly = true)
     public Page<Board> boards(Pageable pageable) {
         return boardRepository.findAll(pageable);
+    }
+
+    public Board write(String title, String content, Member member) {
+        Board board = new Board(title, content, member);
+        return boardRepository.save(board);
     }
 }
