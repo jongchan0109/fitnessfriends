@@ -20,8 +20,9 @@
             <% } else { %>
             <%-- 세션이 있고 로그인 정보가 있는 경우 --%>
             <strong><%= loginMember.getNickname() %>님 환영합니다.</strong>
-            <a href="/member/editForm" class="btn btn-secondary">개인정보 수정</a>
-            <a href="/member/matching/editForm" class="btn btn-secondary">매칭정보 수정</a>
+            <br/>
+            <a href="${pageContext.request.contextPath}/member/editForm/${loginMember.id}" class="btn btn-secondary">개인정보 수정</a>
+            <a href="${pageContext.request.contextPath}/member/matching/editForm" class="btn btn-secondary">매칭정보 수정</a>
 
             <% } %>
 
