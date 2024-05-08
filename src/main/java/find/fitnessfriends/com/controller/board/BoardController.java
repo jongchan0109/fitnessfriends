@@ -47,13 +47,13 @@ public class BoardController {
 
         Board board = boardService.write(writeDto.getTitle(), writeDto.getContent(), member);
 
-        return "redirect:/board" + board.getId();
+        return "redirect:/board/detail/" + board.getId();
     }
 
     @GetMapping("/detail/{id}")
     public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
 
-        Board board = boardService.findById(id);
+        Board board = boardService.detail(id);
         model.addAttribute("board", board);
         HttpSession session = request.getSession();
         Member loginMember = (Member)session.getAttribute("loginMember");
