@@ -5,9 +5,11 @@ import find.fitnessfriends.com.exception.member.DuplicatedLoginIdException;
 import find.fitnessfriends.com.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class MemberService {
 
     private final MemberRepository memberRepository;
@@ -24,6 +26,7 @@ public class MemberService {
         return memberRepository.save(member);
     }
 
+    @Transactional(readOnly = true)
     public Member loginProcess(String loginId, String password) {
 
         Member loginMember = memberRepository.findByLoginId(loginId);
@@ -36,8 +39,22 @@ public class MemberService {
         }
 
         return loginMember;
-
-
     }
 
+    @Transactional(readOnly = true)
+    public Member findById(Long id) {
+        return memberRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("없는 사용자입니다."));
+    }
+
+    public Member editProcess(Long id, String loginId, String password, String nickname) {
+
+        boolean exists = memberRepository.existsByLoginId(loginId);
+
+        if (exists) {
+            throw new DuplicatedLoginIdException("중복된 사용자입니다.");
+        }
+        Member member = findById(id);
+        member.edit(loginId, password, nickname);
+        return member;
+    }
 }
