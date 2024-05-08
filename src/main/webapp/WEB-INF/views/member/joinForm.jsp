@@ -14,6 +14,15 @@
                     <strong class="error-message">${errors.getFieldError( 'loginId' ).defaultMessage }</strong>
                 </c:if>
             </spring:hasBindErrors>
+
+            <spring:hasBindErrors name="joinDto">
+                <c:if test="${errors.hasGlobalErrors()}">
+                    <c:forEach var="error" items="${errors.globalErrors}">
+                        <strong class="error-message">${error.defaultMessage}</strong>
+                    </c:forEach>
+                </c:if>
+            </spring:hasBindErrors>
+
         </div>
         <div class="form-group">
             <label for="password">Password:</label>
