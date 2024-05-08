@@ -39,5 +39,11 @@ public class Board {
         this.title = title;
         this.content = content;
         this.member = member;
+        this.view = 0L;
     }
+
+    public void look() {
+        this.view++;
+    }
+
 }
