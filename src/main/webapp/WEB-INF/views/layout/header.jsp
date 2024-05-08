@@ -47,7 +47,7 @@
             <% } else { %>
             <%-- 세션이 있고 로그인 정보가 있는 경우 --%>
             <li class="nav-item">
-                <a class="nav-link" href="#">게시판</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/board">게시판</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">매칭하기</a>
