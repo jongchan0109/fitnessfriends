@@ -3,6 +3,7 @@ package find.fitnessfriends.com.controller.member;
 import find.fitnessfriends.com.dto.member.JoinDto;
 import find.fitnessfriends.com.dto.member.LoginDto;
 import find.fitnessfriends.com.entity.member.Member;
+import find.fitnessfriends.com.exception.member.DuplicatedLoginIdException;
 import find.fitnessfriends.com.service.member.MemberService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -35,8 +36,14 @@ public class MemberController {
             return "member/joinForm";
         }
 
-        Member loginMember = memberService.joinProcess(joinDto.getLoginId(), joinDto.getPassword(), joinDto.getNickname());
 
+        Member loginMember;
+        try {
+            loginMember = memberService.joinProcess(joinDto.getLoginId(), joinDto.getPassword(), joinDto.getNickname());
+        } catch (DuplicatedLoginIdException e) {
+            bindingResult.reject("loginId.duplicated", "중복된 id 입니다.");
+            return "member/joinForm";
+        }
         HttpSession session = request.getSession();
         session.setAttribute("loginMember", loginMember);
 

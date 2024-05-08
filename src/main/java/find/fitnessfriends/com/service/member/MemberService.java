@@ -1,6 +1,7 @@
 package find.fitnessfriends.com.service.member;
 
 import find.fitnessfriends.com.entity.member.Member;
+import find.fitnessfriends.com.exception.member.DuplicatedLoginIdException;
 import find.fitnessfriends.com.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,11 @@ public class MemberService {
 
     public Member joinProcess(String loginId, String password, String nickname) {
 
-        //TODO 예외 처리
+        boolean exists = memberRepository.existsByLoginId(loginId);
+
+        if (exists) {
+            throw new DuplicatedLoginIdException("중복된 사용자입니다.");
+        }
 
         Member member = new Member(loginId, password, nickname);
         return memberRepository.save(member);
