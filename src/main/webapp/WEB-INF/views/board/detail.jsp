@@ -12,8 +12,9 @@
     <br/><br/>
 
     <div>
-        글번호: <span id="id"><i>${board.id} </i></span>
-        작성자: <span><i>${board.member.nickname} </i></span>
+        글번호: <span>${board.id} </span>
+        작성자: <span>${board.member.nickname} </span>
+        조회수: <span>${board.view} </span>
         <br/>
         작성날짜: <span>${formattedCreateDate} </span>
         수정날짜: <span>${formattedUpdateDate} </span>
