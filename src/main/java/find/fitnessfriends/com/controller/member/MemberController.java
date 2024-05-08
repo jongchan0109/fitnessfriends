@@ -1,5 +1,6 @@
 package find.fitnessfriends.com.controller.member;
 
+import find.fitnessfriends.com.dto.member.EditDto;
 import find.fitnessfriends.com.dto.member.JoinDto;
 import find.fitnessfriends.com.dto.member.LoginDto;
 import find.fitnessfriends.com.entity.member.Member;
@@ -12,10 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @Controller
@@ -35,7 +33,6 @@ public class MemberController {
         if (bindingResult.hasErrors()) {
             return "member/joinForm";
         }
-
 
         Member loginMember;
         try {
@@ -84,6 +81,33 @@ public class MemberController {
         if (session != null) {
             session.invalidate();
         }
+        return "redirect:/";
+    }
+
+    @GetMapping("/editForm/{id}")
+    public String editForm(@PathVariable("id") Long id, Model model) {
+        Member member = memberService.findById(id);
+        model.addAttribute("member", member);
+        return "member/editForm";
+    }
+
+    @PostMapping("/editForm/{id}")
+    public String edit(@PathVariable("id") Long id, @Validated @ModelAttribute EditDto editDto, BindingResult bindingResult, HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return "member/editForm";
+        }
+
+        Member member;
+        try {
+            member = memberService.editProcess(id, editDto.getLoginId(), editDto.getPassword(), editDto.getNickname());
+        } catch (DuplicatedLoginIdException e) {
+            bindingResult.reject("editDto.duplicated", "중복된 id 입니다.");
+            return "member/joinForm";
+        }
+        HttpSession session = request.getSession();
+        session.setAttribute("loginMember", member);
+
         return "redirect:/";
     }
 
