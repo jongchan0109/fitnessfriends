@@ -47,7 +47,7 @@
                 <a class="nav-link" href="#">채팅방</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">로그아웃</a>
+                <a class="nav-link" href="${pageContext.request.contextPath}/member/logout">로그아웃</a>
             </li>
             <% } %>
         </ul>
