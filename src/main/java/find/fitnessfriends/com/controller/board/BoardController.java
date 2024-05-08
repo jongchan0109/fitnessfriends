@@ -13,10 +13,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+
+import java.text.SimpleDateFormat;
 
 @Controller
 @RequestMapping("/board")
@@ -48,8 +47,27 @@ public class BoardController {
 
         Board board = boardService.write(writeDto.getTitle(), writeDto.getContent(), member);
 
-        return "redirect:/board";
+        return "redirect:/board" + board.getId();
     }
 
+    @GetMapping("/detail/{id}")
+    public String detail(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+        HttpSession session = request.getSession();
+        Member loginMember = (Member)session.getAttribute("loginMember");
+
+        model.addAttribute("loginMember", loginMember);
+
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String formattedCreateDate = dateFormat.format(board.getCreatedDate());
+        String formattedUpdateDate = dateFormat.format(board.getUpdateDate());
+
+        model.addAttribute("formattedCreateDate", formattedCreateDate);
+        model.addAttribute("formattedUpdateDate", formattedUpdateDate);
+
+        return "board/detail";
+    }
 
 }
