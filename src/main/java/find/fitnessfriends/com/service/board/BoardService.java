@@ -27,12 +27,19 @@ public class BoardService {
     }
 
     public Board detail(Long id) {
-        Board board =  boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+        Board board =  findById(id);
         board.look();
         return board;
     }
 
+    @Transactional(readOnly = true)
     public Board findById(Long id) {
         return boardRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("게시글이 존재하지 않습니다."));
+    }
+
+    public Board updateProcess(Long id, String title, String content) {
+        Board board = findById(id);
+        board.update(title, content);
+        return board;
     }
 }
