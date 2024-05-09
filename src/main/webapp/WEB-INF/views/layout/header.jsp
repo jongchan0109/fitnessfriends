@@ -24,7 +24,13 @@
             color: red;
             font-size: 12px;
         }
+        .button-group {
+            display: flex; /* 버튼을 가로로 배열합니다. */
+            gap: 10px; /* 버튼 사이의 간격을 조정합니다. */
+        }
     </style>
+
+
 
 </head>
 <body>
