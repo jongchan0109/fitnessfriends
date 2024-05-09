@@ -3,12 +3,17 @@
 <%@ include file="../layout/header.jsp" %>
 
 <div class="container">
-
+    <div class="button-group">
     <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
     <c:if test="${board.member.id == loginMember.id}">
-        <a href="/board/updateForm/${board.id}" class="btn btn-warning">수정</a>
-        <button id="btn-delete" class="btn btn-danger">삭제</button>
+            <a href="/board/updateForm/${board.id}" class="btn btn-warning">수정</a>
+            <form id="deleteForm" action="/board/delete/${board.id}" method="post">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-danger">삭제</button>
+            </form>
     </c:if>
+    </div>
+
     <br/><br/>
 
     <div>
