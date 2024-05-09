@@ -4,7 +4,6 @@
 
 <div class="container">
     <div class="button-group">
-    <button class="btn btn-secondary" onclick="history.back()">돌아가기</button>
     <c:if test="${board.member.id == loginMember.id}">
             <a href="/board/updateForm/${board.id}" class="btn btn-warning">수정</a>
             <form id="deleteForm" action="/board/delete/${board.id}" method="post">
