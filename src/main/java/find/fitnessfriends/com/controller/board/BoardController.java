@@ -36,7 +36,7 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(@ModelAttribute WriteDto writeDto, BindingResult bindingResult, HttpServletRequest request) {
+    public String write(@Validated @ModelAttribute WriteDto writeDto, BindingResult bindingResult, HttpServletRequest request) {
 
         if (bindingResult.hasErrors()) {
             return "board/writeForm";
