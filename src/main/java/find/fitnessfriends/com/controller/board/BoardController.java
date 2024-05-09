@@ -91,4 +91,10 @@ public class BoardController {
         return "redirect:/board/detail/" + board.getId();
     }
 
+    @PostMapping("/delete/{id}")
+    public String delete(@PathVariable Long id) {
+        boardService.deleteProcess(id);
+        return "redirect:/board";
+    }
+
 }
