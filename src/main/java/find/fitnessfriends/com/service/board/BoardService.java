@@ -42,4 +42,9 @@ public class BoardService {
         board.update(title, content);
         return board;
     }
+
+    public void deleteProcess(Long id) {
+        Board board = findById(id);
+        boardRepository.delete(board);
+    }
 }
