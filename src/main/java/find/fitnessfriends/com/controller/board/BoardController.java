@@ -27,7 +27,7 @@ public class BoardController {
     private final BoardService boardService;
 
     @GetMapping("")
-    public String boardHome(Model model, @PageableDefault(sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+    public String boardHome(Model model, @PageableDefault(size = 6,sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
         model.addAttribute("boards", boardService.boards(pageable));
         return "board/boardHome";
     }
