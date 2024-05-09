@@ -1,5 +1,6 @@
 package find.fitnessfriends.com.controller.board;
 
+import find.fitnessfriends.com.dto.board.UpdateDto;
 import find.fitnessfriends.com.dto.board.WriteDto;
 import find.fitnessfriends.com.entity.board.Board;
 import find.fitnessfriends.com.entity.member.Member;
@@ -76,6 +77,18 @@ public class BoardController {
         Board board = boardService.findById(id);
         model.addAttribute("board", board);
         return "board/updateForm";
+    }
+
+
+    @PostMapping("/update/{id}")
+    public String update(@PathVariable Long id, @Validated @ModelAttribute UpdateDto updateDto, BindingResult bindingResult, HttpServletRequest request) {
+
+        if (bindingResult.hasErrors()) {
+            return "board/updateForm";
+        }
+
+        Board board = boardService.updateProcess(id, updateDto.getTitle(), updateDto.getContent());
+        return "redirect:/board/detail/" + board.getId();
     }
 
 }
