@@ -45,4 +45,19 @@ public class ReplyController {
         return "redirect:/board/detail/" + board.getId();
     }
 
+    @PostMapping("/{id}/reply/delete/{replyId}")
+    public String delete(@PathVariable Long id, @PathVariable Long replyId, HttpServletRequest request, Model model) {
+
+        Board board = boardService.findById(id);
+        model.addAttribute("board", board);
+        HttpSession session = request.getSession();
+        Member loginMember = (Member)session.getAttribute("loginMember");
+
+        model.addAttribute("loginMember", loginMember);
+
+        replyService.deleteProcess(replyId);
+
+        return "redirect:/board/detail/" + board.getId();
+    }
+
 }
