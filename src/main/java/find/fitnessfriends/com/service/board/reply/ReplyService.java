@@ -29,4 +29,16 @@ public class ReplyService {
         replyRepository.save(reply);
 
     }
+
+    public void deleteProcess(Long replyId) {
+        Reply reply = findById(replyId);
+        reply.getBoard().getReplies().remove(reply);
+        replyRepository.delete(reply);
+    }
+
+    @Transactional(readOnly = true)
+    public Reply findById(Long id) {
+        return replyRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("해당 댓글이 없습니다."));
+    }
+
 }
