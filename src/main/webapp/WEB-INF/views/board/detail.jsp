@@ -44,7 +44,12 @@
                     <div class="d-flex">
                         <div>작성날짜: <script>document.write(new Date('${reply.createDate}').toLocaleString())</script></div>
                         <div class="mx-2 font-italic">작성자: ${reply.member.nickname}</div>
-                        <button class="badge btn btn-danger">삭제</button>
+                        <c:if test="${reply.member.id == loginMember.id}">
+                            <form id="deleteForm" action="/board/${board.id}/reply/delete/${reply.id}" method="post">
+                                <input type="hidden" name="_method" value="DELETE">
+                                <button type="submit" class="badge btn btn-danger">삭제</button>
+                            </form>
+                        </c:if>
                     </div>
                 </li>
             </c:forEach>
