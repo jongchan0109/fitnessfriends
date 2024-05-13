@@ -1,4 +1,4 @@
-package find.fitnessfriends.com.entity.reply;
+package find.fitnessfriends.com.entity.board;
 
 import find.fitnessfriends.com.entity.board.Board;
 import find.fitnessfriends.com.entity.member.Member;
@@ -31,4 +31,10 @@ public class Reply {
     @CreationTimestamp
     private Timestamp createDate;
 
+    public Reply(Board board, Member member, String content) {
+        this.content = content;
+        this.board = board;
+        this.member = member;
+        this.board.getReplies().add(this);
+    }
 }
