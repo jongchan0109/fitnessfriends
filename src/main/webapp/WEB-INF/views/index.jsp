@@ -33,7 +33,7 @@
         <div class="col-md-4 border rounded p-3"> <!-- 폼의 너비 조정, 테두리 추가, padding 추가 -->
 
             <% if (loginMember == null) { %>
-            <button id="btn-login" class="btn btn-primary" href="member/loginForm">로그인</button>
+            <a href="member/loginForm" class="btn btn-primary">로그인</a>
             <% } else { %>
             <%-- 세션이 있고 로그인 정보가 있는 경우 --%>
             <strong><%= loginMember.getNickname() %>님 환영합니다.</strong>
