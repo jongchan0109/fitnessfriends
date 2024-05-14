@@ -31,6 +31,16 @@ public class Member {
     @CreationTimestamp
     private Timestamp createdDate;
 
+    @Embedded
+    private MatchingInfo matchingInfo;
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "ability", column = @Column(name = "oppAbility")),
+            @AttributeOverride(name = "gender", column = @Column(name = "oppGender")),
+            @AttributeOverride(name = "preferredTime", column = @Column(name = "oppPreferredTime"))
+    })
+    private MatchingInfo oppMatchingInfo;
 
     public Member(String loginId, String password, String nickname) {
         this.loginId = loginId;
@@ -44,4 +54,10 @@ public class Member {
         this.password = password;
         this.nickname = nickname;
     }
+
+    public void updateMatchingInfo(MatchingInfo matchingInfo, MatchingInfo oppMatchingInfo) {
+        this.matchingInfo = matchingInfo;
+        this.oppMatchingInfo = oppMatchingInfo;
+    }
+
 }
