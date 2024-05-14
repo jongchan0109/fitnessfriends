@@ -1,6 +1,10 @@
 package find.fitnessfriends.com.service.member;
 
+import find.fitnessfriends.com.entity.member.MatchingInfo;
 import find.fitnessfriends.com.entity.member.Member;
+import find.fitnessfriends.com.entity.member.matching.Ability;
+import find.fitnessfriends.com.entity.member.matching.Gender;
+import find.fitnessfriends.com.entity.member.matching.PreferredTime;
 import find.fitnessfriends.com.exception.member.DuplicatedLoginIdException;
 import find.fitnessfriends.com.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
@@ -57,4 +61,14 @@ public class MemberService {
         member.edit(loginId, password, nickname);
         return member;
     }
+
+    public void matchingInfoUpdateProcess(Long id, Ability ability, Gender gender, PreferredTime preferredTime,
+                                          Ability oppAbility, Gender oppGender, PreferredTime oppPreferredTime) {
+        Member member = findById(id);
+        MatchingInfo matchingInfo = new MatchingInfo(ability, gender, preferredTime);
+        MatchingInfo oppMatchingInfo = new MatchingInfo(oppAbility, oppGender, oppPreferredTime);
+
+        member.updateMatchingInfo(matchingInfo, oppMatchingInfo);
+    }
+
 }
