@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/member/matching")
@@ -60,6 +62,13 @@ public class MatchingController {
                 Gender.fromValue(oppGender),
                 PreferredTime.fromValue(oppPreferredTime));
         return "redirect:/";
+    }
+
+    @GetMapping("/matching/{id}")
+    public String matching(@PathVariable Long id, Model model) {
+        List<Member> matchingList = memberService.matchingProcess(id);
+        model.addAttribute("matchingList", matchingList);
+        return "/member/matching/matchingList";
     }
 
 
