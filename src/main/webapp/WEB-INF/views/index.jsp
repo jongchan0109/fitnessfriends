@@ -40,7 +40,7 @@
             <br/>
             <a href="${pageContext.request.contextPath}/member/editForm/${loginMember.id}" class="btn btn-secondary">개인정보
                 수정</a>
-            <a href="${pageContext.request.contextPath}/member/matching/editForm" class="btn btn-secondary">매칭정보 수정</a>
+            <a href="${pageContext.request.contextPath}/member/matching/matchingInfoForm/${loginMember.id}" class="btn btn-secondary">매칭정보 수정</a>
 
             <% } %>
 
