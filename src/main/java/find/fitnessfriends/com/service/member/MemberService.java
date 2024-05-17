@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -71,4 +73,14 @@ public class MemberService {
         member.updateMatchingInfo(matchingInfo, oppMatchingInfo);
     }
 
+    @Transactional(readOnly = true)
+    public List<Member> matchingProcess(Long id) {
+        Member member = findById(id);
+        Ability ability = member.getOppMatchingInfo().getAbility();
+        Gender gender = member.getMatchingInfo().getGender();
+        PreferredTime preferredTime = member.getMatchingInfo().getPreferredTime();
+        List<Member> matchingList =  memberRepository.findByOppMatchingInfo_AbilityAndOppMatchingInfo_GenderAndOppMatchingInfo_PreferredTime(ability, gender, preferredTime);
+        matchingList.remove(member);
+        return matchingList;
+    }
 }
